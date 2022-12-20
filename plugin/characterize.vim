@@ -44,8 +44,11 @@ function! s:info(char) abort
 endfunction
 
 nnoremap <silent><script> <Plug>(characterize) :<C-U>echo <SID>info(matchstr(getline('.')[col('.')-1:-1],'.'))<CR>
-if !hasmapto('<Plug>(characterize)', 'n') && mapcheck('ga', 'n') ==# ''
-  nmap ga <Plug>(characterize)
+
+if !exists("g:characterize_no_mappings") || ! g:characterize_no_mappings
+  if !hasmapto('<Plug>(characterize)', 'n') && mapcheck('ga', 'n') ==# ''
+    nmap ga <Plug>(characterize)
+  endif
 endif
 
 " vim:set sw=2 et:
